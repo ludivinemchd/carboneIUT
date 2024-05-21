@@ -1,0 +1,95 @@
+Partie 2: Tests unitaires
+
+première partie: tests fonctionnels
+
+Donnez les spécifications précises des attributs et des méthodes:
+-nbVegan : nombre de repas vegan pris par semaine
+-nbVegetarien : nombre de repas vegetarien pris par semaine
+-nbBoeuf : nombre de repas composé de viande de boeuf pris par semaine
+-nbAutreViandePoisson : nombre de repas avec une autre viande que le boeuf ou avec du poisson pris par semaine
+-void init(): initialize les attributs à 0
+-void addMeals(Meal m, int q): augmente un attribut du nombre q
+-double computeCO2(): calcul la quantité de CO2 émise pour réaliser les repas
+
+En suivant la procédure vue en amphi (cas, tests abstraits, tests concrets, valeurs renvoyées et/ou modifiées), proposez des jeux de tests pour les trois méthodes :
+
+-on commence par utiliser la méthode addMeals ou on ajoute 2 repas Vegan et 1 repas vegetarien
+-on appelle la fonction computeCO2(), cette dernière est sensé retourner la valeur 1.3
+-on appelle la méthode init()
+-on re appelle la fonction computeCO2(), qui cette fois est sensée nour retourner la valeur 0
+
+WeekMeals représente le nombre de repas différents servis à l'IUT en une semaine. il est possible de prendre un repas vegan, végétarien, avec de la viande de boeuf, ou avec une uatreviande ou du poisson.
+le but est de calculer l'empreinte carbonne d'un étudiant de l'iut d'orsay. on peut initialisé les nombres de repas pris à 0. egalement on peut ajouter une quantité renseigné de repas d'un certain type pris
+
+on utilise un tableau par méthode
+
+test fonction init :
+Cas		| Test abstrait		| Test concret		| Valeur des attributs ensuite	|
+----------------|-----------------------|-----------------------|-------------------------------|
+général		|Pas d'entrée	 	| Pas d'entrée		| nbVegan =0			|
+		|			|			| nbVegetarien = 0		|
+		|			|			| nbBoeuf = 0			|
+		|			|			| nbAutreViandePoisson = 0	|
+------------------------------------------------------------------------------------------------|
+
+test fonction addMeals :
+Cas		| Test abstrait		| Test concret		| Valeur des attributs ensuite	|
+-------------------------------------------------------------------------------------------------
+général		| on ajoute des repas 	| -nbVegan =0,		| -nbVegan = 2			|
+		|			| -nbBoeuf =1,		| -nbBoeuf =1			|
+		|			|addMeals(VEGAN, 2)	|				|
+------------------------------------------------------------------------------------------------
+Limite		| on ajoute une valeur 	| -nbBoeuf = 5		| -nbBoeuf =5			|
+		| négative de repas	| addMeals(BOEUF, -3 )	|				|
+------------------------------------------------------------------------------------------------
+Limite		| on ajoute aucun repas | -nbVegetarien = 3	| nbVegetarien = 3		|
+		| 			|addMeals (VEGETARIEN, 0)|				|
+-------------------------------------------------------------------------------------------------
+
+test de la fonction computeCO2 ( ) :
+Cas		| Test abstrait			| Test concret		| Valeur de CO2 ensuite		|
+-------------------------------------------------------------------------------------------------------	|
+général		| affiche la quantité en	|init()			|				|
+		| Kg de CO2 émise 		| -nbVegan =5		|				|
+		|				| -nbBoeuf = 3		| CO2 =	21.20			|
+		|				| computeCO2()		|				|
+-------------------------------------------------------------------------------------------------------	|
+Limite 		| affiche la quantité de	|  init()		| CO2 = 0			|
+		| CO2 émise à l'initialisation  | computeCO2()		|				|
+--------------------------------------------------------------------------------------------------------|
+
+
+deuxième partie : tests du controleur et programmation
+
+Écrivez des spécifications pour le(s) contrôleur(s) sur les cinq boutons:
+
+Classe ControllerButtons:
+
+-Cette classe doit implémenter l'interface ActionListener pour pouvoir être utilisée comme écouteur d'événements pour les boutons de l'interface utilisateur.
+-VOITURE, CO_VOITURAGE, TRANSPORTS_EN_COMMUN, VELO et AUTRE : constantes publiques qui représentent les différents types de modes de transport possibles
+-COMMENCER, END et SUIVANT_WM, SUIVANT_PC: constantes pour les actions associées à chaque bouton permettant de changer de panel (sauf pour le panel transport)
+-VEGAN,VEGETARIEN,BOEUF,AUTR_REPAS : constantes publiques qui représentent les différents types de repas possibles
+-action: stocke l'action associée au bouton cliqué. il s'agit d'une variable de type integer.
+-main: représente l'interface graphique principale de l'application (classe "UIMain") et sera utilisée pour accéder à l'objet Model et changer le panneau d'interface utilisateur.
+-actionPerformed() : appelée chaque fois qu'un bouton est cliqué. Cette méthode appele la méthode add() de l'objet Model approprié en fonction du bouton cliqué. la méthode add renvoie un booleen, 
+si l'ajout est réussi, change le panneau d'affichage "main.changePanel()". Si l'ajout n'est pas valide, la méthode ne fait rien.
+-constructeur: prend en paramètre l'interface graphique principale et l'action associée au bouton. Ce constructeur initialise les variables correspondantes avec les paramètres passés.
+
+Proposez un jeu de tests pour ce contrôleur :
+
+tests actionPerformed :
+
+Cas		| Test abstrait		| Test concret		| Valeur des attributs ensuite					|
+----------------|-----------------------|-----------------------|---------------------------------------------------------------|
+général		|valide est vraie	|tVegan = "4"		|add renvoie vraie						[
+		|			|tVegetarien =1		| 								|
+		| 			|tBoeuf =2		|								|
+		| 			|tAutreFood =3		|								|
+		|---------------------------------------------------------------------------------------------------------------|
+		|valide est faux	|tVegan = "rouge"	|add renvoie vraie						[
+		|			|tVegetarien =1		| 								|
+		| 			|tBoeuf =2		|								|
+		| 			|tAutreFood =3		|								|
+--------------------------------------------------------------------------------------------------------------------------------|
+
+
